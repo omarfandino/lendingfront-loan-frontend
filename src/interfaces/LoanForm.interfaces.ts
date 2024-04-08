@@ -1,5 +1,5 @@
 export interface ILoanForm {
-  taxId: string;
-  businessName: string;
-  requestedAmount: string;
+  tax_id: string;
+  business_name: string;
+  request_amount: string;
 }

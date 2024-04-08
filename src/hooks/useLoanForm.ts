@@ -1,23 +1,44 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ILoanForm } from '../interfaces/LoanForm.interfaces';
+import { useCallback, useState } from 'react';
+import { loanApi } from '../api/loanApi';
 
 const INITIAL_SETUP = {
   defaultValues: {
-    taxId: '',
-    businessName: '',
-    requestedAmount: '',
+    tax_id: '',
+    business_name: '',
+    request_amount: '',
   },
 };
 
 export const useLoanForm = () => {
   const loanFormFields = useForm<ILoanForm>(INITIAL_SETUP);
-  
-  const onSubmitLoanForm: SubmitHandler<ILoanForm> = (data) => {
-    console.log(data)
-  }
+  const { reset } = loanFormFields;
+  const [serverResponse, setServerResponse] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const resetForm = useCallback(() => {
+    setServerResponse('');
+    reset(INITIAL_SETUP.defaultValues);
+  }, []);
+
+  const onSubmitLoanForm: SubmitHandler<ILoanForm> = useCallback(
+    async (values) => {
+      setIsLoading(true);
+
+      const { data } = await loanApi.post<string>('/loan', values);
+      setServerResponse(data);
+
+      setIsLoading(false);
+    },
+    [],
+  );
 
   return {
     loanFormFields,
-	onSubmitLoanForm
+    onSubmitLoanForm,
+    serverResponse,
+    isLoading,
+    resetForm,
   };
 };

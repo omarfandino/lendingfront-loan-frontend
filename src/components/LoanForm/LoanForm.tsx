@@ -34,7 +34,7 @@ function LoanForm() {
     <form onSubmit={handleSubmit(onSubmitLoanForm)}>
       <Stack sx={FORM_STACK_STYLES}>
         <Controller
-          name="taxId"
+          name="tax_id"
           control={control}
           rules={{ required: 'Tax ID is required' }}
           render={({ field }) => (
@@ -43,13 +43,13 @@ function LoanForm() {
               fullWidth
               label="Tax ID"
               variant="outlined"
-              error={Boolean(errors.taxId)}
-              helperText={errors.taxId ? errors.taxId.message : ''}
+              error={Boolean(errors.tax_id)}
+              helperText={errors.tax_id ? errors.tax_id.message : ''}
             />
           )}
         />
         <Controller
-          name="businessName"
+          name="business_name"
           control={control}
           rules={{ required: 'Business Name is required' }}
           render={({ field }) => (
@@ -58,15 +58,15 @@ function LoanForm() {
               fullWidth
               label="Business Name"
               variant="outlined"
-              error={Boolean(errors.businessName)}
+              error={Boolean(errors.business_name)}
               helperText={
-                errors.businessName ? errors.businessName.message : ''
+                errors.business_name ? errors.business_name.message : ''
               }
             />
           )}
         />
         <Controller
-          name="requestedAmount"
+          name="request_amount"
           control={control}
           rules={{
             required: 'Requested Amount is required',
@@ -83,9 +83,9 @@ function LoanForm() {
               label="Requested Amount"
               variant="outlined"
               type="number"
-              error={Boolean(errors.requestedAmount)}
+              error={Boolean(errors.request_amount)}
               helperText={
-                errors.requestedAmount ? errors.requestedAmount.message : ''
+                errors.request_amount ? errors.request_amount.message : ''
               }
             />
           )}
