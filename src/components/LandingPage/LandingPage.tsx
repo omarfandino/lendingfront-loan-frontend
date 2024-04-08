@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 import Header from '../Header/Header';
-import LoanForm from '../LoanForm/LoanForm';
+import PageContent from '../PageContent/PageContent';
 import Footer from '../Footer/Footer';
 import { CONTENT_STYLES, GRID_STYLES } from './LandingPage.styles';
 
@@ -11,7 +11,7 @@ function LandingPage() {
         <Header />
       </Grid>
       <Grid item container sx={CONTENT_STYLES}>
-        <LoanForm />
+        <PageContent />
       </Grid>
       <Grid item>
         <Footer />
