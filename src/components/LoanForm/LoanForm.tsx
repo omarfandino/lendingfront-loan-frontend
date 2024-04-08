@@ -7,6 +7,8 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { Controller } from 'react-hook-form';
+import { useLoanForm } from '../../hooks/useLoanForm';
 import {
   TITLE_STYLES,
   DESCRIPTION_STYLES,
@@ -17,6 +19,13 @@ import {
 } from './LoanForm.styles';
 
 function LoanForm() {
+  const { loanFormFields, onSubmitLoanForm } = useLoanForm();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = loanFormFields;
+
   return (
     <Container sx={CONTAINER_STYLES}>
       <Stack sx={STACK_STYLES}>
@@ -36,19 +45,66 @@ function LoanForm() {
         <Box>
           <Paper elevation={4} sx={PAPER_STYLES}>
             <Typography sx={FORM_TITLE_STYLES}>Loan application</Typography>
-            <form>
+            <form onSubmit={handleSubmit(onSubmitLoanForm)}>
               <Stack gap={2}>
-                <TextField fullWidth label="Tax ID" variant="outlined" />
-                <TextField
-                  fullWidth
-                  label="Nombre del Negocio"
-                  variant="outlined"
+                <Controller
+                  name="taxId"
+                  control={control}
+                  rules={{ required: 'Tax ID is required' }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      label="Tax ID"
+                      variant="outlined"
+                      error={Boolean(errors.taxId)}
+                      helperText={errors.taxId ? errors.taxId.message : ''}
+                    />
+                  )}
                 />
-                <TextField
-                  fullWidth
-                  label="Monto Solicitado"
-                  variant="outlined"
-                  type="number"
+                <Controller
+                  name="businessName"
+                  control={control}
+                  rules={{ required: 'Business Name is required' }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      label="Business Name"
+                      variant="outlined"
+                      error={Boolean(errors.businessName)}
+                      helperText={
+                        errors.businessName ? errors.businessName.message : ''
+                      }
+                    />
+                  )}
+                />
+                <Controller
+                  name="requestedAmount"
+                  control={control}
+                  rules={{
+                    required: 'Requested Amount is required',
+                    validate: {
+                      positive: (value) =>
+                        parseInt(value) > 0 ||
+                        'Requested Amount should be greater than 0',
+                    },
+                  }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      label="Requested Amount"
+                      variant="outlined"
+                      type="number"
+                      error={Boolean(errors.requestedAmount)}
+                      helperText={
+                        errors.requestedAmount
+                          ? errors.requestedAmount.message
+                          : ''
+                      }
+                    />
+                  )}
                 />
                 <Button
                   type="submit"
