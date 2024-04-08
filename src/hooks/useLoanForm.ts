@@ -26,10 +26,15 @@ export const useLoanForm = () => {
     async (values) => {
       setIsLoading(true);
 
-      const { data } = await loanApi.post<string>('/loan', values);
-      setServerResponse(data);
-
-      setIsLoading(false);
+      try {
+        const { data } = await loanApi.post<string>('/loan', values);
+        setServerResponse(data);
+      } catch (err) {
+        console.error(err);
+        setServerResponse('None');
+      } finally {
+        setIsLoading(false);
+      }
     },
     [],
   );

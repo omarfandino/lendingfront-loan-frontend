@@ -13,17 +13,22 @@ export const Header = () => {
       <AppBar>
         <Toolbar variant="regular" sx={TOOLBAR_STYLES}>
           <Stack sx={STACK_STYLES}>
-            <Link aria-label="LendingFront" href="" sx={LOGO_STYLES}>
+            <Link
+              aria-label="LendingFront"
+              href={import.meta.env.VITE_LENDINGFRONT_URL}
+              target="_blank"
+              sx={LOGO_STYLES}
+            >
               <img src="/logo.svg" alt="LendingFront" />
             </Link>
             <IconButton
               aria-label="GitHub"
               component="a"
-              href="https://github.com/omarfandino"
+              href={import.meta.env.VITE_GITHUB_URL}
               target="_blank"
               sx={GITHUB_LINK_STYLES}
             >
-              <GitHubIcon fontSize='inherit' />
+              <GitHubIcon fontSize="inherit" />
             </IconButton>
           </Stack>
         </Toolbar>
